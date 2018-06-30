@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shop.mapper.CartMapper">
+     
+	<resultMap type="com.shop.entity.CartEntity" id="CartMapper">
+	<result column="cart001" property="cart001" />
+	<result column="cart002" property="cart002" />
+	<result column="cart003" property="cart003" />
+	<result column="cart004" property="cart004" />
+	<result column="cart005" property="cart005" />
+	</resultMap>
+
+	<select id="findById" resultType="com.shop.entity.CartEntity">
+		 <![CDATA[ SELECT CART001,CART002,CART003,CART004,CART005 FROM shop_cart WHERE CART001 =#{cart001} ]]> 
+	</select>
+		
+	<select id="findByIdForList" resultMap="CartMapper" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ SELECT CART001,CART002,CART003,CART004,CART005 FROM shop_cart WHERE CART001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="findAll" resultMap="CartMapper">
+		 <![CDATA[ SELECT CART001,CART002,CART003,CART004,CART005 FROM shop_cart ]]> 
+	</select>
+	
+	<select id="findByPage" resultMap="CartMapper">
+		 <![CDATA[ SELECT CART001,CART002,CART003,CART004,CART005 FROM shop_cart ]]> 
+	</select>
+	
+	<select id="findSpecies" resultType="com.shop.entity.CartEntity">
+		 <![CDATA[ SELECT
+	count(CART003) species
+FROM
+	shop_cart  WHERE CART002 =#{cart002} ]]> 
+	</select>
+
+	<select id="findByCriteria" resultMap="CartMapper" parameterType="com.shop.entity.CartEntity">
+		 <![CDATA[ SELECT CART001,CART002,CART003,CART004,CART005 FROM shop_cart ]]> 
+		<where>
+				<if test="cart001 != null">
+				     <![CDATA[ AND CART001 = #{cart001} ]]>
+				</if>
+				<if test="cart002 != null">
+				     <![CDATA[ AND CART002 = #{cart002} ]]>
+				</if>
+				<if test="cart003 != null">
+				     <![CDATA[ AND CART003 = #{cart003} ]]>
+				</if>
+				<if test="cart004 != null">
+				     <![CDATA[ AND CART004 = #{cart004} ]]>
+				</if>
+				<if test="cart005 != null">
+				     <![CDATA[ AND CART005 = #{cart005} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<select id="findCartInfo" resultMap="CartMapper" parameterType="com.shop.entity.CartEntity">
+		 <![CDATA[ SELECT
+	CART001,
+	CART002,
+	CART003,
+	CART004,
+	CART005,
+	PROD002,
+	PROD003,
+	PROD005,
+CART004*PROD003 price
+
+FROM
+	shop_cart A
+LEFT JOIN shop_product B ON A.CART003=B.PROD001 ]]> 
+		<where>
+				<if test="cart002 != null">
+				     <![CDATA[ CART002 = #{cart002} ]]>
+				</if>
+		</where>
+ORDER BY CART005 DESC
+	</select>
+	
+	<select id="findCartTotal" resultMap="CartMapper" parameterType="com.shop.entity.CartEntity">
+		 <![CDATA[ SELECT
+	CART004,
+	PROD003,
+SUM(CART004*PROD003) total
+
+FROM
+	shop_cart A
+LEFT JOIN shop_product B ON A.CART003=B.PROD001 ]]> 
+		<where>
+				<if test="cart002 != null">
+				     <![CDATA[ CART002 = #{cart002} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<select id="countByCriteria" resultType="long" parameterType="com.shop.entity.CartEntity">
+		 <![CDATA[  SELECT COUNT(1) FROM shop_cart ]]> 
+		<where>
+				<if test="cart001 != null">
+				     <![CDATA[ AND CART001 = #{cart001} ]]>
+				</if>
+				<if test="cart002 != null">
+				     <![CDATA[ AND CART002 = #{cart002} ]]>
+				</if>
+				<if test="cart003 != null">
+				     <![CDATA[ AND CART003 = #{cart003} ]]>
+				</if>
+				<if test="cart004 != null">
+				     <![CDATA[ AND CART004 = #{cart004} ]]>
+				</if>
+				<if test="cart005 != null">
+				     <![CDATA[ AND CART005 = #{cart005} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<insert id="insert" parameterType="com.shop.entity.CartEntity" flushCache="true">
+		 <![CDATA[ INSERT INTO shop_cart(CART001,CART002,CART003,CART004,CART005)
+	VALUES
+	(
+			#{cart001,jdbcType=VARCHAR},
+			
+			#{cart002,jdbcType=VARCHAR},
+			
+			#{cart003,jdbcType=VARCHAR},
+			
+			#{cart004,jdbcType=INTEGER},
+			
+			#{cart005,jdbcType=TIMESTAMP}
+			
+	) ]]> 
+	</insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List" flushCache="true">  
+	    <![CDATA[ INSERT INTO shop_cart(CART001,CART002,CART003,CART004,CART005)
+	 ]]> 
+	 VALUES
+	<foreach collection="list" item="item" index="index" separator=",">
+		( 
+			#{item.cart001,jdbcType=VARCHAR},
+			
+			#{item.cart002,jdbcType=VARCHAR},
+			
+			#{item.cart003,jdbcType=VARCHAR},
+			
+			#{item.cart004,jdbcType=INTEGER},
+			
+			#{item.cart005,jdbcType=TIMESTAMP}
+			
+		)
+	</foreach>
+    </insert>  
+    
+	<delete id="deleteById" parameterType="java.lang.String" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_cart WHERE CART001 = #{cart001} ]]> 
+	</delete>	
+	
+	<delete id="deleteBatch" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_cart WHERE CART001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<delete id="deleteByEntity" parameterType="com.shop.entity.CartEntity" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_cart ]]>
+		<where>
+				<if test="cart001 != null">
+				     <![CDATA[ AND CART001 = #{cart001} ]]>
+				</if>
+				<if test="cart002 != null">
+				     <![CDATA[ AND CART002 = #{cart002} ]]>
+				</if>
+				<if test="cart003 != null">
+				     <![CDATA[ AND CART003 = #{cart003} ]]>
+				</if>
+				<if test="cart004 != null">
+				     <![CDATA[ AND CART004 = #{cart004} ]]>
+				</if>
+				<if test="cart005 != null">
+				     <![CDATA[ AND CART005 = #{cart005} ]]>
+				</if>
+		</where>
+	</delete>
+	
+	<update id="update" parameterType="com.shop.entity.CartEntity" flushCache="true">
+		 <![CDATA[  UPDATE shop_cart ]]> 
+		<set>
+			<if test="cart001 != null">
+			      <![CDATA[ CART001 = #{cart001}, ]]>
+			</if>
+			<if test="cart002 != null">
+			      <![CDATA[ CART002 = #{cart002}, ]]>
+			</if>
+			<if test="cart003 != null">
+			      <![CDATA[ CART003 = #{cart003}, ]]>
+			</if>
+			<if test="cart004 != null">
+			      <![CDATA[ CART004 = #{cart004}, ]]>
+			</if>
+			<if test="cart005 != null">
+			      <![CDATA[ CART005 = #{cart005} ]]>
+			</if>
+		</set>
+		 <![CDATA[  WHERE CART001 = #{cart001} ]]> 
+	</update>
+
+   
+</mapper>

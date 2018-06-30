@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shop.mapper.CategoriesMapper">
+     
+	<resultMap type="com.shop.entity.CategoriesEntity" id="CategoriesMapper">
+	<result column="cate001" property="cate001" />
+	<result column="cate002" property="cate002" />
+	<result column="cate003" property="cate003" />
+	<result column="cate004" property="cate004" />
+	</resultMap>
+
+	<select id="findById" resultType="com.shop.entity.CategoriesEntity">
+		 <![CDATA[ SELECT CATE001,CATE002,CATE003,CATE004 FROM shop_categories WHERE CATE001 =#{cate001} ]]> 
+	</select>
+		
+	<select id="findByIdForList" resultMap="CategoriesMapper" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ SELECT CATE001,CATE002,CATE003,CATE004 FROM shop_categories WHERE CATE001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="findAll" resultMap="CategoriesMapper">
+		 <![CDATA[ SELECT CATE001,CATE002,CATE003,CATE004 FROM shop_categories ]]> 
+	</select>
+	
+	<select id="findByPage" resultMap="CategoriesMapper">
+		 <![CDATA[ SELECT CATE001,CATE002,CATE003,CATE004 FROM shop_categories ]]> 
+	</select>
+
+	
+	<select id="findByCriteria" resultMap="CategoriesMapper" parameterType="com.shop.entity.CategoriesEntity">
+		 <![CDATA[ SELECT CATE001,CATE002,CATE003,CATE004 FROM shop_categories ]]> 
+		<where>
+				<if test="cate001 != null">
+				     <![CDATA[ AND CATE001 = #{cate001} ]]>
+				</if>
+				<if test="cate002 != null">
+				     <![CDATA[ AND CATE002 = #{cate002} ]]>
+				</if>
+				<if test="cate003 != null">
+				     <![CDATA[ AND CATE003 = #{cate003} ]]>
+				</if>
+				<if test="cate004 != null">
+				     <![CDATA[ AND CATE004 = #{cate004} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<select id="countByCriteria" resultType="long" parameterType="com.shop.entity.CategoriesEntity">
+		 <![CDATA[  SELECT COUNT(1) FROM shop_categories ]]> 
+		<where>
+				<if test="cate001 != null">
+				     <![CDATA[ AND CATE001 = #{cate001} ]]>
+				</if>
+				<if test="cate002 != null">
+				     <![CDATA[ AND CATE002 = #{cate002} ]]>
+				</if>
+				<if test="cate003 != null">
+				     <![CDATA[ AND CATE003 = #{cate003} ]]>
+				</if>
+				<if test="cate004 != null">
+				     <![CDATA[ AND CATE004 = #{cate004} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<insert id="insert" parameterType="com.shop.entity.CategoriesEntity" flushCache="true">
+		 <![CDATA[ INSERT INTO shop_categories(CATE001,CATE002,CATE003,CATE004)
+	VALUES
+	(
+			#{cate001,jdbcType=VARCHAR},
+			
+			#{cate002,jdbcType=VARCHAR},
+			
+			#{cate003,jdbcType=VARCHAR},
+			
+			#{cate004,jdbcType=VARCHAR}
+			
+	) ]]> 
+	</insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List" flushCache="true">  
+	    <![CDATA[ INSERT INTO shop_categories(CATE001,CATE002,CATE003,CATE004)
+	 ]]> 
+	 VALUES
+	<foreach collection="list" item="item" index="index" separator=",">
+		( 
+			#{item.cate001,jdbcType=VARCHAR},
+			
+			#{item.cate002,jdbcType=VARCHAR},
+			
+			#{item.cate003,jdbcType=VARCHAR},
+			
+			#{item.cate004,jdbcType=VARCHAR}
+			
+		)
+	</foreach>
+    </insert>  
+    
+	<delete id="deleteById" parameterType="java.lang.String" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_categories WHERE CATE001 = #{cate001} ]]> 
+	</delete>	
+	
+	<delete id="deleteBatch" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_categories WHERE CATE001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<delete id="deleteByEntity" parameterType="com.shop.entity.CategoriesEntity" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_categories ]]>
+		<where>
+				<if test="cate001 != null">
+				     <![CDATA[ AND CATE001 = #{cate001} ]]>
+				</if>
+				<if test="cate002 != null">
+				     <![CDATA[ AND CATE002 = #{cate002} ]]>
+				</if>
+				<if test="cate003 != null">
+				     <![CDATA[ AND CATE003 = #{cate003} ]]>
+				</if>
+				<if test="cate004 != null">
+				     <![CDATA[ AND CATE004 = #{cate004} ]]>
+				</if>
+		</where>
+	</delete>
+	
+	<update id="update" parameterType="com.shop.entity.CategoriesEntity" flushCache="true">
+		 <![CDATA[  UPDATE shop_categories ]]> 
+		<set>
+			<if test="cate001 != null">
+			      <![CDATA[ CATE001 = #{cate001}, ]]>
+			</if>
+			<if test="cate002 != null">
+			      <![CDATA[ CATE002 = #{cate002}, ]]>
+			</if>
+			<if test="cate003 != null">
+			      <![CDATA[ CATE003 = #{cate003}, ]]>
+			</if>
+			<if test="cate004 != null">
+			      <![CDATA[ CATE004 = #{cate004} ]]>
+			</if>
+		</set>
+		 <![CDATA[  WHERE CATE001 = #{cate001} ]]> 
+	</update>
+
+   
+</mapper>

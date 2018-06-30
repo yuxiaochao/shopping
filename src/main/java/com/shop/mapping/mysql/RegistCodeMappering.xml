@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shop.mapper.RegistCodeMapper">
+     
+	<resultMap type="com.shop.entity.RegistCodeEntity" id="RegistCodeMapper">
+	<result column="reco001" property="reco001" />
+	<result column="reco002" property="reco002" />
+	<result column="reco003" property="reco003" />
+	<result column="reco004" property="reco004" />
+	<result column="reco005" property="reco005" />
+	</resultMap>
+
+	<select id="findById" resultType="com.shop.entity.RegistCodeEntity">
+		 <![CDATA[ SELECT RECO001,RECO002,RECO003,RECO004,RECO005 FROM shop_registCode WHERE RECO001 =#{reco001} ]]> 
+	</select>
+		
+	<select id="findByIdForList" resultMap="RegistCodeMapper" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ SELECT RECO001,RECO002,RECO003,RECO004,RECO005 FROM shop_registCode WHERE RECO001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="findAll" resultMap="RegistCodeMapper">
+		 <![CDATA[ SELECT
+	RECO001,
+	RECO002,
+	RECO003,
+	RECO004,
+	RECO005,
+	BAUS002,
+	CASE
+WHEN RECO004 > CURDATE() THEN
+	'可用'
+WHEN RECO004 < CURDATE() THEN
+	'已过期'
+END expired
+FROM
+	shop_registCode A
+LEFT JOIN shop_backUser B ON B.BAUS001 = A.RECO003 ]]> 
+	</select>
+	
+	<select id="findByPage" resultMap="RegistCodeMapper">
+		 <![CDATA[ SELECT RECO001,RECO002,RECO003,RECO004,RECO005 FROM shop_registCode ]]> 
+	</select>
+
+	
+	<select id="findByCriteria" resultMap="RegistCodeMapper" parameterType="com.shop.entity.RegistCodeEntity">
+		 <![CDATA[ SELECT RECO001,RECO002,RECO003,RECO004,RECO005 FROM shop_registCode ]]> 
+		<where>
+				<if test="reco001 != null">
+				     <![CDATA[ AND RECO001 = #{reco001} ]]>
+				</if>
+				<if test="reco002 != null">
+				     <![CDATA[ AND RECO002 = #{reco002} ]]>
+				</if>
+				<if test="reco003 != null">
+				     <![CDATA[ AND RECO003 = #{reco003} ]]>
+				</if>
+				<if test="reco004 != null">
+				     <![CDATA[ AND RECO004 > #{reco004} ]]>
+				</if>
+				<if test="reco005 != null">
+				     <![CDATA[ AND RECO005 = #{reco005} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<select id="countByCriteria" resultType="long" parameterType="com.shop.entity.RegistCodeEntity">
+		 <![CDATA[  SELECT COUNT(1) FROM shop_registCode ]]> 
+		<where>
+				<if test="reco001 != null">
+				     <![CDATA[ AND RECO001 = #{reco001} ]]>
+				</if>
+				<if test="reco002 != null">
+				     <![CDATA[ AND RECO002 = #{reco002} ]]>
+				</if>
+				<if test="reco003 != null">
+				     <![CDATA[ AND RECO003 = #{reco003} ]]>
+				</if>
+				<if test="reco004 != null">
+				     <![CDATA[ AND RECO004 = #{reco004} ]]>
+				</if>
+				<if test="reco005 != null">
+				     <![CDATA[ AND RECO005 = #{reco005} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<insert id="insert" parameterType="com.shop.entity.RegistCodeEntity" flushCache="true">
+		 <![CDATA[ INSERT INTO shop_registCode(RECO001,RECO002,RECO003,RECO004,RECO005)
+	VALUES
+	(
+			#{reco001,jdbcType=VARCHAR},
+			
+			#{reco002,jdbcType=VARCHAR},
+			
+			#{reco003,jdbcType=VARCHAR},
+			
+			date_sub(curdate(),interval -7 day),
+			
+			#{reco005,jdbcType=TIMESTAMP}
+			
+	) ]]> 
+	</insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List" flushCache="true">  
+	    <![CDATA[ INSERT INTO shop_registCode(RECO001,RECO002,RECO003,RECO004,RECO005)
+	 ]]> 
+	 VALUES
+	<foreach collection="list" item="item" index="index" separator=",">
+		( 
+			#{item.reco001,jdbcType=VARCHAR},
+			
+			#{item.reco002,jdbcType=VARCHAR},
+			
+			#{item.reco003,jdbcType=VARCHAR},
+			
+			#{item.reco004,jdbcType=TIMESTAMP},
+			
+			#{item.reco005,jdbcType=TIMESTAMP}
+			
+		)
+	</foreach>
+    </insert>  
+    
+	<delete id="deleteById" parameterType="java.lang.String" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_registCode WHERE RECO001 = #{reco001} ]]> 
+	</delete>	
+	
+	<delete id="deleteBatch" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_registCode WHERE RECO001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<delete id="deleteByEntity" parameterType="com.shop.entity.RegistCodeEntity" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_registCode ]]>
+		<where>
+				<if test="reco001 != null">
+				     <![CDATA[ AND RECO001 = #{reco001} ]]>
+				</if>
+				<if test="reco002 != null">
+				     <![CDATA[ AND RECO002 = #{reco002} ]]>
+				</if>
+				<if test="reco003 != null">
+				     <![CDATA[ AND RECO003 = #{reco003} ]]>
+				</if>
+				<if test="reco004 != null">
+				     <![CDATA[ AND RECO004 = #{reco004} ]]>
+				</if>
+				<if test="reco005 != null">
+				     <![CDATA[ AND RECO005 = #{reco005} ]]>
+				</if>
+		</where>
+	</delete>
+	
+	<update id="update" parameterType="com.shop.entity.RegistCodeEntity" flushCache="true">
+		 <![CDATA[  UPDATE shop_registCode ]]> 
+		<set>
+			<if test="reco001 != null">
+			      <![CDATA[ RECO001 = #{reco001}, ]]>
+			</if>
+			<if test="reco002 != null">
+			      <![CDATA[ RECO002 = #{reco002}, ]]>
+			</if>
+			<if test="reco003 != null">
+			      <![CDATA[ RECO003 = #{reco003}, ]]>
+			</if>
+			<if test="reco004 != null">
+			      <![CDATA[ RECO004 = #{reco004}, ]]>
+			</if>
+			<if test="reco005 != null">
+			      <![CDATA[ RECO005 = #{reco005} ]]>
+			</if>
+		</set>
+		 <![CDATA[  WHERE RECO001 = #{reco001} ]]> 
+	</update>
+
+   
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shop.mapper.BackUserMapper">
+     
+	<resultMap type="com.shop.entity.BackUserEntity" id="BackUserMapper">
+	<result column="baus001" property="baus001" />
+	<result column="baus002" property="baus002" />
+	<result column="baus003" property="baus003" />
+	<result column="baus004" property="baus004" />
+	</resultMap>
+
+	<select id="findById" resultType="com.shop.entity.BackUserEntity">
+		 <![CDATA[ SELECT BAUS001,BAUS002,BAUS003,BAUS004 FROM shop_backUser WHERE BAUS001 =#{baus001} ]]> 
+	</select>
+		
+	<select id="findByIdForList" resultMap="BackUserMapper" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ SELECT BAUS001,BAUS002,BAUS003,BAUS004 FROM shop_backUser WHERE BAUS001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="findAll" resultMap="BackUserMapper">
+		 <![CDATA[ SELECT BAUS001,BAUS002,BAUS003,BAUS004 FROM shop_backUser ]]> 
+	</select>
+	
+	<select id="findByPage" resultMap="BackUserMapper">
+		 <![CDATA[ SELECT BAUS001,BAUS002,BAUS003,BAUS004 FROM shop_backUser ]]> 
+	</select>
+
+	
+	<select id="findByCriteria" resultMap="BackUserMapper" parameterType="com.shop.entity.BackUserEntity">
+		 <![CDATA[ SELECT BAUS001,BAUS002,BAUS003,BAUS004 FROM shop_backUser ]]> 
+		<where>
+				<if test="baus001 != null">
+				     <![CDATA[ AND BAUS001 = #{baus001} ]]>
+				</if>
+				<if test="baus002 != null">
+				     <![CDATA[ AND BAUS002 = #{baus002} ]]>
+				</if>
+				<if test="baus003 != null">
+				     <![CDATA[ AND BAUS003 = #{baus003} ]]>
+				</if>
+				<if test="baus004 != null">
+				     <![CDATA[ AND BAUS004 = #{baus004} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<select id="countByCriteria" resultType="long" parameterType="com.shop.entity.BackUserEntity">
+		 <![CDATA[  SELECT COUNT(1) FROM shop_backUser ]]> 
+		<where>
+				<if test="baus001 != null">
+				     <![CDATA[ AND BAUS001 = #{baus001} ]]>
+				</if>
+				<if test="baus002 != null">
+				     <![CDATA[ AND BAUS002 = #{baus002} ]]>
+				</if>
+				<if test="baus003 != null">
+				     <![CDATA[ AND BAUS003 = #{baus003} ]]>
+				</if>
+				<if test="baus004 != null">
+				     <![CDATA[ AND BAUS004 = #{baus004} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<insert id="insert" parameterType="com.shop.entity.BackUserEntity" flushCache="true">
+		 <![CDATA[ INSERT INTO shop_backUser(BAUS001,BAUS002,BAUS003,BAUS004)
+	VALUES
+	(
+			#{baus001,jdbcType=VARCHAR},
+			
+			#{baus002,jdbcType=VARCHAR},
+			
+			#{baus003,jdbcType=VARCHAR},
+			
+			#{baus004,jdbcType=TIMESTAMP}
+			
+	) ]]> 
+	</insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List" flushCache="true">  
+	    <![CDATA[ INSERT INTO shop_backUser(BAUS001,BAUS002,BAUS003,BAUS004)
+	 ]]> 
+	 VALUES
+	<foreach collection="list" item="item" index="index" separator=",">
+		( 
+			#{item.baus001,jdbcType=VARCHAR},
+			
+			#{item.baus002,jdbcType=VARCHAR},
+			
+			#{item.baus003,jdbcType=VARCHAR},
+			
+			#{item.baus004,jdbcType=TIMESTAMP}
+			
+		)
+	</foreach>
+    </insert>  
+    
+	<delete id="deleteById" parameterType="java.lang.String" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_backUser WHERE BAUS001 = #{baus001} ]]> 
+	</delete>	
+	
+	<delete id="deleteBatch" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_backUser WHERE BAUS001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<delete id="deleteByEntity" parameterType="com.shop.entity.BackUserEntity" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_backUser ]]>
+		<where>
+				<if test="baus001 != null">
+				     <![CDATA[ AND BAUS001 = #{baus001} ]]>
+				</if>
+				<if test="baus002 != null">
+				     <![CDATA[ AND BAUS002 = #{baus002} ]]>
+				</if>
+				<if test="baus003 != null">
+				     <![CDATA[ AND BAUS003 = #{baus003} ]]>
+				</if>
+				<if test="baus004 != null">
+				     <![CDATA[ AND BAUS004 = #{baus004} ]]>
+				</if>
+		</where>
+	</delete>
+	
+	<update id="update" parameterType="com.shop.entity.BackUserEntity" flushCache="true">
+		 <![CDATA[  UPDATE shop_backUser ]]> 
+		<set>
+			<if test="baus001 != null">
+			      <![CDATA[ BAUS001 = #{baus001}, ]]>
+			</if>
+			<if test="baus002 != null">
+			      <![CDATA[ BAUS002 = #{baus002}, ]]>
+			</if>
+			<if test="baus003 != null">
+			      <![CDATA[ BAUS003 = #{baus003}, ]]>
+			</if>
+			<if test="baus004 != null">
+			      <![CDATA[ BAUS004 = #{baus004} ]]>
+			</if>
+		</set>
+		 <![CDATA[  WHERE BAUS001 = #{baus001} ]]> 
+	</update>
+
+   
+</mapper>

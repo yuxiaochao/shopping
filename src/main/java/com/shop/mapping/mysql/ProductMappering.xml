@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shop.mapper.ProductMapper">
+     
+	<resultMap type="com.shop.entity.ProductEntity" id="ProductMapper">
+	<result column="prod001" property="prod001" />
+	<result column="prod002" property="prod002" />
+	<result column="prod003" property="prod003" />
+	<result column="prod004" property="prod004" />
+	<result column="prod005" property="prod005" />
+	<result column="prod006" property="prod006" />
+	<result column="prod007" property="prod007" />
+	<result column="prod008" property="prod008" />
+	<result column="prod009" property="prod009" />
+	<result column="prod010" property="prod010" />
+	<result column="prod011" property="prod011" />
+	<result column="prod012" property="prod012" />
+	</resultMap>
+
+	<select id="findById" resultType="com.shop.entity.ProductEntity">
+		 <![CDATA[ SELECT PROD001,PROD002,PROD003,PROD004,PROD005,PROD006,PROD007,PROD008,PROD009,PROD010,PROD011,PROD012,CATE002 FROM shop_product LEFT JOIN shop_categories 
+ON PROD010=CATE001 WHERE PROD001 =#{prod001} ]]> 
+	</select>
+		
+	<select id="findByIdForList" resultMap="ProductMapper" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ SELECT PROD001,PROD002,PROD003,PROD004,PROD005,PROD006,PROD007,PROD008,PROD009,PROD010,PROD011,PROD012 FROM shop_product WHERE PROD001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="findAll" resultMap="ProductMapper">
+		 <![CDATA[ SELECT
+	PROD001,
+	PROD002,
+	PROD003,
+	PROD004,
+	PROD005,
+	PROD006,
+	PROD007,
+	PROD008,
+	PROD009,
+	PROD010,
+	PROD011,
+	PROD012,
+	CATE002,
+	CASE
+WHEN PROD012 = 0 THEN
+	'上架'
+WHEN PROD012 = 1 THEN
+	'下架'
+END STATUS
+FROM
+	shop_product
+LEFT JOIN shop_categories ON PROD010 = CATE001 ]]> 
+	</select>
+	
+	<select id="findByPage" resultMap="ProductMapper">
+		 <![CDATA[ SELECT PROD001,PROD002,PROD003,PROD004,PROD005,PROD006,PROD007,PROD008,PROD009,PROD010,PROD011,PROD012,CATE002 FROM shop_product LEFT JOIN shop_categories 
+ON PROD010=CATE001 ]]> 
+		 <where>
+		 <![CDATA[ AND PROD012 = 0 ]]>
+		 </where>
+	</select>
+
+	
+	<select id="findByCriteria" resultMap="ProductMapper" parameterType="com.shop.entity.ProductEntity">
+		 <![CDATA[ SELECT PROD001,PROD002,PROD003,PROD004,PROD005,PROD006,PROD007,PROD008,PROD009,PROD010,PROD011,PROD012 FROM shop_product ]]> 
+		<where>
+				<if test="prod001 != null">
+				     <![CDATA[ AND PROD001 = #{prod001} ]]>
+				</if>
+				<if test="prod002 != null">
+				     <![CDATA[ AND PROD002 = #{prod002} ]]>
+				</if>
+				<if test="prod003 != null">
+				     <![CDATA[ AND PROD003 = #{prod003} ]]>
+				</if>
+				<if test="prod004 != null">
+				     <![CDATA[ AND PROD004 = #{prod004} ]]>
+				</if>
+				<if test="prod005 != null">
+				     <![CDATA[ AND PROD005 = #{prod005} ]]>
+				</if>
+				<if test="prod006 != null">
+				     <![CDATA[ AND PROD006 = #{prod006} ]]>
+				</if>
+				<if test="prod007 != null">
+				     <![CDATA[ AND PROD007 = #{prod007} ]]>
+				</if>
+				<if test="prod008 != null">
+				     <![CDATA[ AND PROD008 = #{prod008} ]]>
+				</if>
+				<if test="prod009 != null">
+				     <![CDATA[ AND PROD009 = #{prod009} ]]>
+				</if>
+				<if test="prod010 != null">
+				     <![CDATA[ AND PROD010 = #{prod010} ]]>
+				</if>
+				<if test="prod011 != null">
+				     <![CDATA[ AND PROD011 = #{prod011} ]]>
+				</if>
+				<if test="prod012 != null">
+				     <![CDATA[ AND PROD012 = #{prod012} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<select id="countByCriteria" resultType="long" parameterType="com.shop.entity.ProductEntity">
+		 <![CDATA[  SELECT COUNT(1) FROM shop_product ]]> 
+		<where>
+				<if test="prod001 != null">
+				     <![CDATA[ AND PROD001 = #{prod001} ]]>
+				</if>
+				<if test="prod002 != null">
+				     <![CDATA[ AND PROD002 = #{prod002} ]]>
+				</if>
+				<if test="prod003 != null">
+				     <![CDATA[ AND PROD003 = #{prod003} ]]>
+				</if>
+				<if test="prod004 != null">
+				     <![CDATA[ AND PROD004 = #{prod004} ]]>
+				</if>
+				<if test="prod005 != null">
+				     <![CDATA[ AND PROD005 = #{prod005} ]]>
+				</if>
+				<if test="prod006 != null">
+				     <![CDATA[ AND PROD006 = #{prod006} ]]>
+				</if>
+				<if test="prod007 != null">
+				     <![CDATA[ AND PROD007 = #{prod007} ]]>
+				</if>
+				<if test="prod008 != null">
+				     <![CDATA[ AND PROD008 = #{prod008} ]]>
+				</if>
+				<if test="prod009 != null">
+				     <![CDATA[ AND PROD009 = #{prod009} ]]>
+				</if>
+				<if test="prod010 != null">
+				     <![CDATA[ AND PROD010 = #{prod010} ]]>
+				</if>
+				<if test="prod011 != null">
+				     <![CDATA[ AND PROD011 = #{prod011} ]]>
+				</if>
+				<if test="prod012 != null">
+				     <![CDATA[ AND PROD012 = #{prod012} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<insert id="insert" parameterType="com.shop.entity.ProductEntity" flushCache="true">
+		 <![CDATA[ INSERT INTO shop_product(PROD001,PROD002,PROD003,PROD004,PROD005,PROD006,PROD007,PROD008,PROD009,PROD010,PROD011,PROD012)
+	VALUES
+	(
+			#{prod001,jdbcType=VARCHAR},
+			
+			#{prod002,jdbcType=VARCHAR},
+			
+			#{prod003,jdbcType=VARCHAR},
+			
+			#{prod004,jdbcType=VARCHAR},
+			
+			#{prod005,jdbcType=VARCHAR},
+			
+			#{prod006,jdbcType=VARCHAR},
+			
+			#{prod007,jdbcType=TIMESTAMP},
+			
+			#{prod008,jdbcType=TIMESTAMP},
+			
+			#{prod009,jdbcType=VARCHAR},
+			
+			#{prod010,jdbcType=VARCHAR},
+			
+			#{prod011,jdbcType=INTEGER},
+			
+			#{prod012,jdbcType=INTEGER}
+			
+	) ]]> 
+	</insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List" flushCache="true">  
+	    <![CDATA[ INSERT INTO shop_product(PROD001,PROD002,PROD003,PROD004,PROD005,PROD006,PROD007,PROD008,PROD009,PROD010,PROD011,PROD012)
+	 ]]> 
+	 VALUES
+	<foreach collection="list" item="item" index="index" separator=",">
+		( 
+			#{item.prod001,jdbcType=VARCHAR},
+			
+			#{item.prod002,jdbcType=VARCHAR},
+			
+			#{item.prod003,jdbcType=VARCHAR},
+			
+			#{item.prod004,jdbcType=VARCHAR},
+			
+			#{item.prod005,jdbcType=VARCHAR},
+			
+			#{item.prod006,jdbcType=VARCHAR},
+			
+			#{item.prod007,jdbcType=TIMESTAMP},
+			
+			#{item.prod008,jdbcType=TIMESTAMP},
+			
+			#{item.prod009,jdbcType=VARCHAR},
+			
+			#{item.prod010,jdbcType=VARCHAR},
+			
+			#{item.prod011,jdbcType=INTEGER},
+			
+			#{item.prod012,jdbcType=INTEGER}
+			
+		)
+	</foreach>
+    </insert>  
+    
+	<delete id="deleteById" parameterType="java.lang.String" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_product WHERE PROD001 = #{prod001} ]]> 
+	</delete>	
+	
+	<delete id="deleteBatch" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_product WHERE PROD001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<delete id="deleteByEntity" parameterType="com.shop.entity.ProductEntity" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_product ]]>
+		<where>
+				<if test="prod001 != null">
+				     <![CDATA[ AND PROD001 = #{prod001} ]]>
+				</if>
+				<if test="prod002 != null">
+				     <![CDATA[ AND PROD002 = #{prod002} ]]>
+				</if>
+				<if test="prod003 != null">
+				     <![CDATA[ AND PROD003 = #{prod003} ]]>
+				</if>
+				<if test="prod004 != null">
+				     <![CDATA[ AND PROD004 = #{prod004} ]]>
+				</if>
+				<if test="prod005 != null">
+				     <![CDATA[ AND PROD005 = #{prod005} ]]>
+				</if>
+				<if test="prod006 != null">
+				     <![CDATA[ AND PROD006 = #{prod006} ]]>
+				</if>
+				<if test="prod007 != null">
+				     <![CDATA[ AND PROD007 = #{prod007} ]]>
+				</if>
+				<if test="prod008 != null">
+				     <![CDATA[ AND PROD008 = #{prod008} ]]>
+				</if>
+				<if test="prod009 != null">
+				     <![CDATA[ AND PROD009 = #{prod009} ]]>
+				</if>
+				<if test="prod010 != null">
+				     <![CDATA[ AND PROD010 = #{prod010} ]]>
+				</if>
+				<if test="prod011 != null">
+				     <![CDATA[ AND PROD011 = #{prod011} ]]>
+				</if>
+				<if test="prod012 != null">
+				     <![CDATA[ AND PROD012 = #{prod012} ]]>
+				</if>
+		</where>
+	</delete>
+	
+	<update id="update" parameterType="com.shop.entity.ProductEntity" flushCache="true">
+		 <![CDATA[  UPDATE shop_product ]]> 
+		<set>
+			<if test="prod001 != null">
+			      <![CDATA[ PROD001 = #{prod001}, ]]>
+			</if>
+			<if test="prod002 != null">
+			      <![CDATA[ PROD002 = #{prod002}, ]]>
+			</if>
+			<if test="prod003 != null">
+			      <![CDATA[ PROD003 = #{prod003}, ]]>
+			</if>
+			<if test="prod004 != null">
+			      <![CDATA[ PROD004 = #{prod004}, ]]>
+			</if>
+			<if test="prod005 != null">
+			      <![CDATA[ PROD005 = #{prod005}, ]]>
+			</if>
+			<if test="prod006 != null">
+			      <![CDATA[ PROD006 = #{prod006}, ]]>
+			</if>
+			<if test="prod007 != null">
+			      <![CDATA[ PROD007 = #{prod007}, ]]>
+			</if>
+			<if test="prod008 != null">
+			      <![CDATA[ PROD008 = #{prod008}, ]]>
+			</if>
+			<if test="prod009 != null">
+			      <![CDATA[ PROD009 = #{prod009}, ]]>
+			</if>
+			<if test="prod010 != null">
+			      <![CDATA[ PROD010 = #{prod010}, ]]>
+			</if>
+			<if test="prod011 != null">
+			      <![CDATA[ PROD011 = #{prod011}, ]]>
+			</if>
+			<if test="prod012 != null">
+			      <![CDATA[ PROD012 = #{prod012} ]]>
+			</if>
+		</set>
+		 <![CDATA[  WHERE PROD001 = #{prod001} ]]> 
+	</update>
+
+   
+</mapper>

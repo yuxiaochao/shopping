@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shop.mapper.UserMapper">
+     
+	<resultMap type="com.shop.entity.UserEntity" id="UserMapper">
+	<result column="user001" property="user001" />
+	<result column="user002" property="user002" />
+	<result column="user003" property="user003" />
+	<result column="user004" property="user004" />
+	<result column="user005" property="user005" />
+	<result column="user006" property="user006" />
+	<result column="user007" property="user007" />
+	<result column="user008" property="user008" />
+	</resultMap>
+
+	<select id="findById" resultType="com.shop.entity.UserEntity">
+		 <![CDATA[ SELECT USER001,USER002,USER003,USER004,USER005,USER006,USER007,USER008 FROM shop_user WHERE USER001 =#{user001} ]]> 
+	</select>
+		
+	<select id="findByIdForList" resultMap="UserMapper" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ SELECT USER001,USER002,USER003,USER004,USER005,USER006,USER007,USER008 FROM shop_user WHERE USER001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="findAll" resultMap="UserMapper">
+		 <![CDATA[ SELECT USER001,USER002,USER003,USER004,USER005,USER006,USER007,USER008 FROM shop_user ]]> 
+	</select>
+	<select id="findByPage" resultMap="UserMapper">
+     	 <![CDATA[ SELECT USER001,USER002,USER003,USER004,USER005,USER006,USER007,USER008 FROM shop_user ]]> 
+    </select>
+	
+	<select id="findByCriteria" resultMap="UserMapper" parameterType="com.shop.entity.UserEntity">
+		 <![CDATA[ SELECT USER001,USER002,USER003,USER004,USER005,USER006,USER007,USER008 FROM shop_user ]]> 
+		<where>
+				<if test="user001 != null">
+				     <![CDATA[ AND USER001 = #{user001} ]]>
+				</if>
+				<if test="user002 != null">
+				     <![CDATA[ AND USER002 = #{user002} ]]>
+				</if>
+				<if test="user003 != null">
+				     <![CDATA[ AND USER003 = #{user003} ]]>
+				</if>
+				<if test="user004 != null">
+				     <![CDATA[ AND USER004 = #{user004} ]]>
+				</if>
+				<if test="user005 != null">
+				     <![CDATA[ AND USER005 = #{user005} ]]>
+				</if>
+				<if test="user006 != null">
+				     <![CDATA[ AND USER006 = #{user006} ]]>
+				</if>
+				<if test="user007 != null">
+				     <![CDATA[ AND USER007 = #{user007} ]]>
+				</if>
+				<if test="user008 != null">
+				     <![CDATA[ AND USER008 = #{user008} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<select id="countByCriteria" resultType="long" parameterType="com.shop.entity.UserEntity">
+		 <![CDATA[  SELECT COUNT(1) FROM shop_user ]]> 
+		<where>
+				<if test="user001 != null">
+				     <![CDATA[ AND USER001 = #{user001} ]]>
+				</if>
+				<if test="user002 != null">
+				     <![CDATA[ AND USER002 = #{user002} ]]>
+				</if>
+				<if test="user003 != null">
+				     <![CDATA[ AND USER003 = #{user003} ]]>
+				</if>
+				<if test="user004 != null">
+				     <![CDATA[ AND USER004 = #{user004} ]]>
+				</if>
+				<if test="user005 != null">
+				     <![CDATA[ AND USER005 = #{user005} ]]>
+				</if>
+				<if test="user006 != null">
+				     <![CDATA[ AND USER006 = #{user006} ]]>
+				</if>
+				<if test="user007 != null">
+				     <![CDATA[ AND USER007 = #{user007} ]]>
+				</if>
+				<if test="user008 != null">
+				     <![CDATA[ AND USER008 = #{user008} ]]>
+				</if>
+		</where>
+
+	</select>
+	
+	<insert id="insert" parameterType="com.shop.entity.UserEntity" flushCache="true">
+		 <![CDATA[ INSERT INTO shop_user(USER001,USER002,USER003,USER004,USER005,USER006,USER007,USER008)
+	VALUES
+	(
+			#{user001,jdbcType=VARCHAR},
+			
+			#{user002,jdbcType=VARCHAR},
+			
+			#{user003,jdbcType=VARCHAR},
+			
+			#{user004,jdbcType=VARCHAR},
+			
+			#{user005,jdbcType=VARCHAR},
+			
+			#{user006,jdbcType=VARCHAR},
+			
+			#{user007,jdbcType=VARCHAR},
+			
+			#{user008,jdbcType=VARCHAR}
+			
+	) ]]> 
+	</insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List" flushCache="true">  
+	    <![CDATA[ INSERT INTO shop_user(USER001,USER002,USER003,USER004,USER005,USER006,USER007,USER008)
+	 ]]> 
+	 VALUES
+	<foreach collection="list" item="item" index="index" separator=",">
+		( 
+			#{item.user001,jdbcType=VARCHAR},
+			
+			#{item.user002,jdbcType=VARCHAR},
+			
+			#{item.user003,jdbcType=VARCHAR},
+			
+			#{item.user004,jdbcType=VARCHAR},
+			
+			#{item.user005,jdbcType=VARCHAR},
+			
+			#{item.user006,jdbcType=VARCHAR},
+			
+			#{item.user007,jdbcType=VARCHAR},
+			
+			#{item.user008,jdbcType=VARCHAR}
+			
+		)
+	</foreach>
+    </insert>  
+    
+	<delete id="deleteById" parameterType="java.lang.String" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_user WHERE USER001 = #{user001} ]]> 
+	</delete>	
+	
+	<delete id="deleteBatch" parameterType="java.util.List" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_user WHERE USER001 IN  ]]> 
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<delete id="deleteByEntity" parameterType="com.shop.entity.UserEntity" flushCache="true">
+		 <![CDATA[ DELETE FROM shop_user ]]>
+		<where>
+				<if test="user001 != null">
+				     <![CDATA[ AND USER001 = #{user001} ]]>
+				</if>
+				<if test="user002 != null">
+				     <![CDATA[ AND USER002 = #{user002} ]]>
+				</if>
+				<if test="user003 != null">
+				     <![CDATA[ AND USER003 = #{user003} ]]>
+				</if>
+				<if test="user004 != null">
+				     <![CDATA[ AND USER004 = #{user004} ]]>
+				</if>
+				<if test="user005 != null">
+				     <![CDATA[ AND USER005 = #{user005} ]]>
+				</if>
+				<if test="user006 != null">
+				     <![CDATA[ AND USER006 = #{user006} ]]>
+				</if>
+				<if test="user007 != null">
+				     <![CDATA[ AND USER007 = #{user007} ]]>
+				</if>
+				<if test="user008 != null">
+				     <![CDATA[ AND USER008 = #{user008} ]]>
+				</if>
+		</where>
+	</delete>
+	
+	<update id="update" parameterType="com.shop.entity.UserEntity" flushCache="true">
+		 <![CDATA[  UPDATE shop_user ]]> 
+		<set>
+			<if test="user001 != null">
+			      <![CDATA[ USER001 = #{user001}, ]]>
+			</if>
+			<if test="user002 != null">
+			      <![CDATA[ USER002 = #{user002}, ]]>
+			</if>
+			<if test="user003 != null">
+			      <![CDATA[ USER003 = #{user003}, ]]>
+			</if>
+			<if test="user004 != null">
+			      <![CDATA[ USER004 = #{user004}, ]]>
+			</if>
+			<if test="user005 != null">
+			      <![CDATA[ USER005 = #{user005}, ]]>
+			</if>
+			<if test="user006 != null">
+			      <![CDATA[ USER006 = #{user006}, ]]>
+			</if>
+			<if test="user007 != null">
+			      <![CDATA[ USER007 = #{user007}, ]]>
+			</if>
+			<if test="user008 != null">
+			      <![CDATA[ USER008 = #{user008} ]]>
+			</if>
+		</set>
+		 <![CDATA[  WHERE USER001 = #{user001} ]]> 
+	</update>
+
+   
+</mapper>
