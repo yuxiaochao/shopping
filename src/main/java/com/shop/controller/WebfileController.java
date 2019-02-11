@@ -62,7 +62,6 @@ public class WebfileController extends BaseController{
                 }  
             }  
         }  
-        //此时在Windows下输出的是[/AjaxFileUpload/upload/愤怒的小鸟.jpg]  
         System.out.println(request.getContextPath() + "/WebFiles/" + originalFilename);
         msg.setStatus(SUCCESS);
 		return msg;
